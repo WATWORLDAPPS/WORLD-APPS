@@ -1,1 +1,1209 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f5f7fb">
+<meta name="description" content="WorldApps V5 — aplicações úteis, ferramentas e jogos num só lugar.">
+<title>WorldApps V5 — World Apps Technology WAT</title>
+<style>
+:root{--bg:#f5f7fb;--panel:#fff;--panel2:#f0f3f8;--text:#172033;--muted:#69758a;--line:#e2e7f0;--accent:#356df3;--accent2:#6b55e8;--shadow:0 10px 35px rgba(24,39,75,.07);--good:#15956b;--danger:#d64545}
+[data-theme="dark"]{--bg:#10131a;--panel:#191e28;--panel2:#222937;--text:#edf2fb;--muted:#9aa8bd;--line:#303949;--accent:#7ca1ff;--accent2:#a394ff;--shadow:0 10px 35px rgba(0,0,0,.2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;transition:background .2s,color .2s}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:2px}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.btn{border:1px solid var(--line);border-radius:11px;padding:10px 14px;background:var(--panel);color:var(--text);font-weight:650;transition:.15s}
+.btn:hover{transform:translateY(-1px);border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:white;border-color:var(--accent)}
+.btn.soft{background:var(--panel2)}
+.btn.danger{color:var(--danger)}
+.field{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--text)}
+.label{display:block;font-weight:650;margin:12px 0 6px}
+.brandmark{display:grid;place-items:center;width:46px;height:46px;border-radius:15px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-size:24px;font-weight:900;box-shadow:0 8px 20px #356df333}
+.welcome{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 20% 0%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 45%),var(--bg)}
+.welcome-card{width:min(100%,510px);background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:clamp(24px,5vw,46px);box-shadow:var(--shadow)}
+.welcome-top{display:flex;align-items:center;gap:14px}
+.eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.welcome h1{font-size:clamp(32px,7vw,47px);line-height:1.08;letter-spacing:-.045em;margin:26px 0 12px}
+.welcome p{color:var(--muted)}
+.welcome-actions{display:grid;gap:10px;margin-top:25px}
+.welcome-actions .btn{padding:14px}
+.welcome-foot{border-top:1px solid var(--line);margin-top:28px;padding-top:17px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.app-shell{min-height:100vh}
+.topbar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1440px;margin:auto;padding:13px 22px;display:flex;align-items:center;gap:15px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:850;white-space:nowrap}
+.brand .brandmark{width:38px;height:38px;border-radius:12px;font-size:20px}
+.searchbox{position:relative;flex:1;max-width:560px;margin:auto}
+.searchbox .field{padding-left:40px;background:var(--panel2)}
+.search-icon{position:absolute;left:13px;top:10px;color:var(--muted)}
+.top-actions{display:flex;align-items:center;gap:8px}
+.iconbtn{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text);font-size:18px}
+.user-chip{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:13px;padding:5px 10px 5px 5px;background:var(--panel);max-width:150px}
+.avatar{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--panel2);font-weight:800;color:var(--accent)}
+.user-chip span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.layout{max-width:1440px;margin:auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:26px;padding:25px 22px 50px}
+.sidebar{align-self:start;position:sticky;top:88px}
+.side-title{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;padding:12px}
+.navbtn{width:100%;display:flex;align-items:center;gap:12px;padding:11px 13px;margin:2px 0;border:0;border-radius:11px;background:transparent;color:var(--muted);text-align:left;font-weight:650}
+.navbtn:hover,.navbtn.active{background:color-mix(in srgb,var(--accent) 10%,var(--panel));color:var(--accent)}
+.nav-emoji{width:22px;text-align:center;font-size:17px}
+.side-note{margin-top:25px;padding:15px;border:1px solid var(--line);border-radius:15px;background:var(--panel);font-size:12px;color:var(--muted)}
+.main{min-width:0}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 28px;border-radius:22px;background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 12%,var(--panel)),var(--panel));border:1px solid var(--line);margin-bottom:27px}
+.hero h1{font-size:clamp(25px,4vw,35px);letter-spacing:-.04em;margin:4px 0}
+.hero p{margin:5px 0 0;color:var(--muted)}
+.hero-bubble{width:90px;height:90px;flex-shrink:0;border-radius:25px;display:grid;place-items:center;font-size:42px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 18%,var(--panel)),color-mix(in srgb,var(--accent2) 18%,var(--panel)));border:1px solid var(--line)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:25px 0 13px}
+.section-head h2{font-size:20px;letter-spacing:-.025em;margin:0}
+.section-head p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.app-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.app-card{position:relative;text-align:left;border:1px solid var(--line);border-radius:17px;background:var(--panel);color:var(--text);padding:17px;min-height:151px;box-shadow:0 2px 7px #15203b05;transition:transform .15s,border-color .15s,box-shadow .15s}
+.app-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 60%,var(--line));box-shadow:var(--shadow)}
+.app-icon{width:43px;height:43px;display:grid;place-items:center;border-radius:13px;background:var(--panel2);font-size:23px;margin-bottom:13px}
+.app-card h3{font-size:14px;margin:0 0 4px}
+.app-card p{font-size:12px;line-height:1.4;color:var(--muted);margin:0}
+.tag{display:inline-block;margin-top:10px;font-size:10px;font-weight:750;color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--panel));padding:3px 7px;border-radius:6px}
+.empty{padding:35px;text-align:center;border:1px dashed var(--line);border-radius:16px;color:var(--muted)}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:38px}
+.mobile-nav{display:none}
+.modal-backdrop{position:fixed;inset:0;z-index:30;background:#10152199;backdrop-filter:blur(5px);display:grid;place-items:center;padding:18px}
+.modal{width:min(100%,690px);max-height:88vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:0 25px 80px #0003}
+.modal-head{position:sticky;top:0;z-index:2;background:var(--panel);display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line)}
+.modal-head h2{font-size:19px;margin:0}
+.modal-body{padding:22px}
+.modal-close{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;width:36px;height:36px;font-size:19px}
+.tool-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.output{white-space:pre-wrap;overflow-wrap:anywhere;padding:13px;border:1px solid var(--line);background:var(--panel2);border-radius:11px;min-height:42px}
+.todo-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.todo-row span{flex:1}
+.todo-row.done span{text-decoration:line-through;color:var(--muted)}
+.qr-wrap{display:grid;place-items:center;padding:15px;background:white;border-radius:14px;margin-top:15px;min-height:60px}
+.qr-wrap img{max-width:100%;image-rendering:pixelated}
+.game-board{display:grid;grid-template-columns:repeat(3,82px);gap:7px;justify-content:center;margin:20px auto}
+.game-cell{height:82px;border:1px solid var(--line);border-radius:13px;background:var(--panel2);font-size:30px;font-weight:800;color:var(--accent)}
+.game-cell:disabled{cursor:default}
+.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:380px;margin:15px auto}
+.memory-cell{height:65px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);font-size:25px}
+.memory-cell.revealed{background:color-mix(in srgb,var(--accent) 12%,var(--panel));border-color:var(--accent)}
+.account-switch{display:flex;gap:8px;margin-bottom:12px}
+.account-switch button{flex:1}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:60;background:var(--text);color:var(--bg);padding:11px 17px;border-radius:12px;box-shadow:var(--shadow);max-width:90vw;text-align:center}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:15px 0}
+.stat{padding:14px;border:1px solid var(--line);border-radius:13px;background:var(--panel2)}
+.stat strong{display:block;font-size:22px}
+.stat span{font-size:12px;color:var(--muted)}
+@media(max-width:1100px){.app-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:190px minmax(0,1fr);gap:18px}}
+@media(max-width:780px){.topbar-inner{padding:10px 13px;gap:9px;flex-wrap:wrap}.brand .brand-name{display:none}.searchbox{order:3;flex-basis:100%;max-width:none}.top-actions{margin-left:auto}.layout{display:block;padding:18px 13px 85px}.sidebar{display:none}.hero{padding:21px}.hero-bubble{width:65px;height:65px;font-size:30px}.app-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.app-card{padding:14px;min-height:145px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:12;justify-content:space-around;padding:8px 5px calc(8px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--panel)}.mobile-nav .navbtn{display:grid;justify-items:center;gap:2px;padding:5px 7px;margin:0;font-size:10px}.mobile-nav .nav-emoji{font-size:18px}.user-chip .username{display:none}.hero h1{font-size:26px}}
+@media(max-width:380px){.app-grid{grid-template-columns:1fr}.app-card{min-height:auto;display:grid;grid-template-columns:44px 1fr;column-gap:12px}.app-icon{grid-row:span 3;margin:0}.app-card .tag{justify-self:start}}
+</style>
+</head>
+<body>
+<div id="welcome" class="welcome">
+  <div class="welcome-card">
+    <div class="welcome-top"><div class="brandmark">W</div><div><div class="eyebrow">World Apps Technology WAT</div><strong>WorldApps V5</strong></div></div>
+    <h1>Bem-vindo à<br><span style="color:var(--accent)">World Apps</span></h1>
+    <p>As ferramentas do teu dia a dia, organizadas num único espaço simples, rápido e útil.</p>
+    <div class="welcome-actions">
+      <button class="btn primary" id="welcomeLogin">↗ Iniciar sessão</button>
+      <button class="btn" id="enterApps">▦ Entrar na WorldApps</button>
+    </div>
+    <div class="welcome-foot"><span class="small muted">WorldApps V5 · Edição web</span><button class="btn soft" id="welcomeTheme">◐ Mudar tema</button></div>
+  </div>
+</div>
+<div id="appShell" class="app-shell hidden">
+  <header class="topbar"><div class="topbar-inner">
+    <div class="brand"><div class="brandmark">W</div><span class="brand-name">WorldApps <span class="muted">V5</span></span></div>
+    <div class="searchbox"><span class="search-icon">⌕</span><input id="search" class="field" type="search" placeholder="Pesquisar aplicações..." aria-label="Pesquisar aplicações"></div>
+    <div class="top-actions"><button class="iconbtn" id="themeBtn" title="Mudar tema" aria-label="Mudar tema">◐</button><button class="iconbtn" id="homeBtn" title="Início" aria-label="Início">⌂</button><button class="user-chip" id="profileBtn" title="Perfil"><span class="avatar" id="avatar">G</span><span class="username" id="userName">Visitante</span></button></div>
+  </div></header>
+  <div class="layout">
+    <aside class="sidebar"><div class="side-title">Menu principal</div>
+      <button class="navbtn active" data-filter="all"><span class="nav-emoji">▦</span> Todas as aplicações</button>
+      <button class="navbtn" data-filter="produtividade"><span class="nav-emoji">✓</span> Produtividade</button>
+      <button class="navbtn" data-filter="ferramentas"><span class="nav-emoji">⚙</span> Ferramentas</button>
+      <button class="navbtn" data-filter="criacao"><span class="nav-emoji">✦</span> Criação</button>
+      <button class="navbtn" data-filter="jogos"><span class="nav-emoji">🎮</span> Jogos</button>
+      <button class="navbtn" data-filter="favoritos"><span class="nav-emoji">☆</span> Favoritos</button>
+      <div class="side-note"><strong>World Apps Technology WAT</strong><br><br>Uma coleção de ferramentas úteis, com foco na simplicidade e na privacidade.<br><br><span>As tuas notas e contas locais ficam neste navegador.</span></div>
+    </aside>
+    <main class="main">
+      <section class="hero"><div><div class="eyebrow">O teu espaço digital</div><h1 id="heroTitle">Tudo o que precisas.</h1><p id="heroSubtitle">Ferramentas úteis para trabalhar, criar e divertir-te.</p></div><div class="hero-bubble">✦</div></section>
+      <div class="section-head"><div><h2 id="sectionTitle">Explora as aplicações</h2><p id="resultCount">Escolhe uma aplicação para começar.</p></div><button class="btn soft" id="clearSearch">Limpar pesquisa</button></div>
+      <div id="appGrid" class="app-grid"></div><div id="emptyState" class="empty hidden">Não encontrámos aplicações com esse nome. Experimenta outra pesquisa.</div>
+      <div class="footer">WorldApps V5 · World Apps Technology WAT · Feito para ser útil</div>
+    </main>
+  </div>
+  <nav class="mobile-nav">
+    <button class="navbtn active" data-filter="all"><span class="nav-emoji">▦</span>Todas</button>
+    <button class="navbtn" data-filter="produtividade"><span class="nav-emoji">✓</span>Trabalho</button>
+    <button class="navbtn" data-filter="ferramentas"><span class="nav-emoji">⚙</span>Ferramentas</button>
+    <button class="navbtn" data-filter="jogos"><span class="nav-emoji">🎮</span>Jogos</button>
+    <button class="navbtn" data-filter="favoritos"><span class="nav-emoji">☆</span>Favoritos</button>
+  </nav>
+</div>
+<div id="modalBackdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><div class="modal-head"><h2 id="modalTitle">Aplicação</h2><button class="modal-close" id="modalClose" aria-label="Fechar">×</button></div><div id="modalBody" class="modal-body"></div></div></div>
+<div id="toast" class="toast hidden" role="status"></div>
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const safe = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store = {
+ get(k, fallback=null){try{const v=localStorage.getItem('worldapps5_'+k);return v===null?fallback:JSON.parse(v)}catch{return fallback}},
+ set(k,v){try{localStorage.setItem('worldapps5_'+k,JSON.stringify(v));return true}catch{return false}}
+};
+let currentUser = store.get('session',null), currentFilter='all', searchTerm='', activeApp=null, toastTimer;
+let theme=store.get('theme','light');
 
+function applyTheme(){
+ document.documentElement.dataset.theme=theme==='dark'?'dark':'light';
+ store.set('theme',theme);
+ $('#themeBtn').textContent=theme==='dark'?'☀':'◐';
+ $('#welcomeTheme').textContent=theme==='dark'?'☀ Tema claro':'◐ Tema escuro';
+}
+function toggleTheme(){theme=theme==='dark'?'light':'dark';applyTheme()}
+function toast(msg){
+ const t=$('#toast');
+ t.textContent=msg;
+ t.classList.remove('hidden');
+ clearTimeout(toastTimer);
+ toastTimer=setTimeout(()=>t.classList.add('hidden'),2600);
+}
+function getAccounts(){return store.get('accounts',[])}
+function setSession(user){currentUser=user;store.set('session',user);updateUserUI()}
+function updateUserUI(){
+ const name=currentUser?.name||'Visitante';
+ $('#userName').textContent=name;
+ $('#avatar').textContent=(name[0]||'G').toUpperCase();
+}
+function showWelcome(){
+ $('#welcome').classList.remove('hidden');
+ $('#appShell').classList.add('hidden');
+}
+function showApp(){
+ $('#welcome').classList.add('hidden');
+ $('#appShell').classList.remove('hidden');
+ renderApps();
+}
+
+const apps=[
+{id:'notes',name:'Bloco de notas',desc:'Guarda ideias e notas no teu navegador.',icon:'📝',cat:'produtividade',tag:'Guardar localmente'},
+{id:'tasks',name:'Lista de tarefas',desc:'Organiza o que tens para fazer.',icon:'✅',cat:'produtividade',tag:'Organização'},
+{id:'calendar',name:'Calendário',desc:'Consulta datas e planeia o teu dia.',icon:'📅',cat:'produtividade',tag:'Datas'},
+{id:'pomodoro',name:'Foco Pomodoro',desc:'Temporizador para sessões de concentração.',icon:'⏱️',cat:'produtividade',tag:'Foco'},
+{id:'stopwatch',name:'Cronómetro',desc:'Mede tempos e voltas.',icon:'⏲️',cat:'ferramentas',tag:'Tempo'},
+{id:'calculator',name:'Calculadora',desc:'Faz cálculos básicos com segurança.',icon:'🧮',cat:'ferramentas',tag:'Cálculos'},
+{id:'converter',name:'Conversor de unidades',desc:'Converte comprimento, massa e temperatura.',icon:'📐',cat:'ferramentas',tag:'Conversão'},
+{id:'percentage',name:'Calculadora de percentagens',desc:'Calcula percentagens e descontos.',icon:'％',cat:'ferramentas',tag:'Matemática'},
+{id:'qr',name:'Criador de QR Code',desc:'Cria um QR Code a partir de texto ou link.',icon:'▦',cat:'criacao',tag:'QR Code'},
+{id:'password',name:'Gerador de palavras-passe',desc:'Gera palavras-passe aleatórias.',icon:'🔐',cat:'ferramentas',tag:'Privacidade'},
+{id:'text',name:'Ferramentas de texto',desc:'Conta palavras, caracteres e linhas.',icon:'🔤',cat:'ferramentas',tag:'Texto'},
+{id:'color',name:'Paleta de cores',desc:'Escolhe uma cor e copia o seu código.',icon:'🎨',cat:'criacao',tag:'Design'},
+{id:'gradient',name:'Gerador de gradientes',desc:'Cria gradientes CSS e copia o código.',icon:'🌈',cat:'criacao',tag:'Design'},
+{id:'markdown',name:'Editor Markdown',desc:'Escreve Markdown e vê uma pré-visualização.',icon:'📄',cat:'criacao',tag:'Escrita'},
+{id:'json',name:'Formatador JSON',desc:'Valida e organiza texto JSON.',icon:'{}',cat:'ferramentas',tag:'Programação'},
+{id:'unitbytes',name:'Conversor de dados',desc:'Converte KB, MB e GB.',icon:'💾',cat:'ferramentas',tag:'Digital'},
+{id:'age',name:'Calculadora de idade',desc:'Calcula a idade a partir da data de nascimento.',icon:'🎂',cat:'ferramentas',tag:'Datas'},
+{id:'random',name:'Sorteador aleatório',desc:'Sorteia um número dentro de um intervalo.',icon:'🎲',cat:'ferramentas',tag:'Aleatório'},
+{id:'coin',name:'Cara ou coroa',desc:'Lança uma moeda virtual.',icon:'🪙',cat:'jogos',tag:'Jogo rápido'},
+{id:'dice',name:'Lançar dados',desc:'Lança um ou mais dados de seis faces.',icon:'🎲',cat:'jogos',tag:'Jogo rápido'},
+{id:'rps',name:'Pedra, papel e tesoura',desc:'Joga uma ronda contra o computador.',icon:'✊',cat:'jogos',tag:'Jogo'},
+{id:'tictactoe',name:'Jogo do galo',desc:'Desafia outra pessoa no mesmo ecrã.',icon:'❎',cat:'jogos',tag:'2 jogadores'},
+{id:'memory',name:'Jogo da memória',desc:'Encontra todos os pares de símbolos.',icon:'🧠',cat:'jogos',tag:'Memória'},
+{id:'reaction',name:'Teste de reação',desc:'Descobre a rapidez dos teus reflexos.',icon:'⚡',cat:'jogos',tag:'Reflexos'},
+{id:'typing',name:'Teste de escrita',desc:'Pratica a velocidade de escrita.',icon:'⌨️',cat:'jogos',tag:'Prática'},
+{id:'checklist',name:'Checklist de viagem',desc:'Prepara uma lista para não esquecer nada.',icon:'🧳',cat:'produtividade',tag:'Planeamento'},
+{id:'expenses',name:'Registo de despesas',desc:'Regista despesas simples neste navegador.',icon:'💶',cat:'produtividade',tag:'Orçamento'},
+{id:'water',name:'Lembrete de água',desc:'Marca os copos de água que bebeste hoje.',icon:'💧',cat:'produtividade',tag:'Hábitos'},
+{id:'quotes',name:'Frase do dia',desc:'Recebe uma frase inspiradora aleatória.',icon:'💬',cat:'criacao',tag:'Inspiração'},
+{id:'timer',name:'Temporizador',desc:'Define uma contagem decrescente.',icon:'⏳',cat:'ferramentas',tag:'Tempo'},
+{id:'favorites',name:'Os meus favoritos',desc:'Acede rapidamente às aplicações favoritas.',icon:'⭐',cat:'ferramentas',tag:'Atalhos'},
+{id:'profile',name:'Perfil e conta',desc:'Gere a tua conta local e sessão.',icon:'👤',cat:'ferramentas',tag:'Conta local'}
+];
+
+function favorites(){return store.get('favorites',[])}
+function renderApps(){
+ const grid=$('#appGrid');
+ const list=apps.filter(a=>{
+  const match=(!searchTerm||(a.name+' '+a.desc+' '+a.cat).toLowerCase().includes(searchTerm));
+  const cat=currentFilter==='all'||(currentFilter==='favoritos'?favorites().includes(a.id):a.cat===currentFilter);
+  return match&&cat;
+ });
+ grid.innerHTML=list.map(a=>`<button class="app-card" data-app="${a.id}"><div class="app-icon">${a.icon}</div><h3>${safe(a.name)}</h3><p>${safe(a.desc)}</p><span class="tag">${safe(a.tag)}</span></button>`).join('');
+ $('#emptyState').classList.toggle('hidden',list.length>0);
+ $('#resultCount').textContent=`${list.length} ${list.length===1?'aplicação disponível':'aplicações disponíveis'}`;
+ $('#sectionTitle').textContent=currentFilter==='all'?'Explora as aplicações':({'produtividade':'Produtividade','ferramentas':'Ferramentas','criacao':'Criação','jogos':'Jogos','favoritos':'Os meus favoritos'}[currentFilter]||'Aplicações');
+ $$('.navbtn[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter===currentFilter));
+}
+
+function openModal(title,body){
+ activeApp=title;
+ $('#modalTitle').textContent=title;
+ $('#modalBody').innerHTML=body;
+ $('#modalBackdrop').classList.remove('hidden');
+ $('#modalBody').querySelector('input,textarea,button,select')?.focus();
+}
+function closeModal(){
+ $('#modalBackdrop').classList.add('hidden');
+ $('#modalBody').innerHTML='';
+ activeApp=null;
+}
+
+function openAccount(mode='login'){
+ const login=mode==='login';
+ openModal(login?'Iniciar sessão':'Criar conta local',`
+ <div class="muted">A conta fica guardada apenas neste navegador e neste dispositivo. Não é uma conta online.</div>
+ <div class="account-switch">
+ <button class="btn ${login?'primary':''}" id="modeLogin">Iniciar sessão</button>
+ <button class="btn ${!login?'primary':''}" id="modeRegister">Criar conta</button>
+ </div>
+ <form id="accountForm">
+ <div id="nameWrap" class="${login?'hidden':''}">
+ <label class="label" for="accountName">Nome</label>
+ <input class="field" id="accountName" autocomplete="name" maxlength="35" placeholder="Como te chamas?">
+ </div>
+ <label class="label" for="accountEmail">Email</label>
+ <input class="field" id="accountEmail" type="email" autocomplete="username" required placeholder="tu@exemplo.pt">
+ <label class="label" for="accountPassword">Palavra-passe</label>
+ <input class="field" id="accountPassword" type="password" autocomplete="${login?'current-password':'new-password'}" minlength="6" required placeholder="Pelo menos 6 caracteres">
+ <button class="btn primary" style="width:100%;margin-top:18px" type="submit">${login?'Iniciar sessão':'Criar conta'}</button>
+ </form>
+ <p class="small muted">Não uses uma palavra-passe importante: esta é uma demonstração local, não substitui autenticação segura num servidor.</p>
+ `);
+ $('#modeLogin').onclick=()=>openAccount('login');
+ $('#modeRegister').onclick=()=>openAccount('register');
+ $('#accountForm').onsubmit=async e=>{
+  e.preventDefault();
+  const email=$('#accountEmail').value.trim().toLowerCase();
+  const password=$('#accountPassword').value;
+  if(!email||password.length<6)return toast('Verifica o email e a palavra-passe.');
+  let accounts=getAccounts();
+  if(login){
+   const acc=accounts.find(a=>a.email===email);
+   if(!acc||!await verifyPassword(password,acc.password)){
+    toast('Dados incorretos ou conta não encontrada.');
+    return;
+   }
+   setSession({email:acc.email,name:acc.name});
+   closeModal();
+   toast('Sessão iniciada. Olá, '+acc.name+'!');
+  }else{
+   if(accounts.some(a=>a.email===email)){
+    toast('Já existe uma conta com esse email neste navegador.');
+    return;
+   }
+   const name=$('#accountName').value.trim()||email.split('@')[0];
+   const hash=await hashPassword(password);
+   accounts.push({email,name,password:hash});
+   store.set('accounts',accounts);
+   setSession({email,name});
+   closeModal();
+   toast('Conta local criada com sucesso!');
+  }
+ };
+}
+
+async function hashPassword(p){
+ if(window.crypto?.subtle){
+  const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p));
+  return 'sha256:'+Array.from(new Uint8Array(bytes)).map(b=>b.toString(16).padStart(2,'0')).join('');
+ }
+ return 'plain:'+p;
+}
+async function verifyPassword(p,hash){return hash===await hashPassword(p)||hash==='plain:'+p}
+
+function profileModal(){
+ const accounts=getAccounts();
+ openModal('Perfil e conta',`
+ <div class="stat-row">
+ <div class="stat"><strong>${accounts.length}</strong><span>contas locais</span></div>
+ <div class="stat"><strong>${favorites().length}</strong><span>favoritos</span></div>
+ <div class="stat"><strong>${currentUser?'Sim':'Não'}</strong><span>sessão ativa</span></div>
+ </div>
+ ${currentUser?`
+ <p>Iniciaste sessão como <strong>${safe(currentUser.name)}</strong>.</p>
+ <p class="muted small">${safe(currentUser.email)}</p>
+ <div class="tool-actions">
+ <button class="btn primary" id="logoutBtn">Terminar sessão</button>
+ <button class="btn danger" id="deleteAccountBtn">Apagar conta local</button>
+ </div>
+ `:`
+ <p>Estás a usar a WorldApps como visitante.</p>
+ <div class="tool-actions">
+ <button class="btn primary" id="profileLogin">Iniciar sessão</button>
+ <button class="btn" id="profileRegister">Criar conta local</button>
+ </div>
+ `}
+ <hr style="border:0;border-top:1px solid var(--line);margin:22px 0">
+ <p class="small muted">As contas e dados guardados são específicos deste navegador. Limpar os dados do navegador pode apagá-los. Não guardes informação sensível.</p>
+ `);
+ if(currentUser){
+  $('#logoutBtn').onclick=()=>{setSession(null);closeModal();toast('Sessão terminada.');};
+  $('#deleteAccountBtn').onclick=()=>{
+   if(!confirm('Apagar esta conta local e os seus dados de conta? As notas e tarefas ficam guardadas.'))return;
+   store.set('accounts',getAccounts().filter(a=>a.email!==currentUser.email));
+   setSession(null);
+   closeModal();
+   toast('Conta local apagada.');
+  };
+ }else{
+  $('#profileLogin').onclick=()=>openAccount('login');
+  $('#profileRegister').onclick=()=>openAccount('register');
+ }
+}
+
+const toolInput=(id,label,placeholder='',type='text',value='')=>`<label class="label" for="${id}">${label}</label><input class="field" id="${id}" type="${type}" placeholder="${placeholder}" value="${safe(value)}">`;
+const toolArea=(id,label,placeholder='',value='')=>`<label class="label" for="${id}">${label}</label><textarea class="field" id="${id}" rows="5" placeholder="${placeholder}">${safe(value)}</textarea>`;
+
+function launch(id){
+ switch(id){
+ case 'notes':{
+ const val=store.get('notes','');
+ openModal('Bloco de notas',`${toolArea('notesText','As tuas notas','Escreve aqui...',val)}
+ <div class="tool-actions">
+ <button class="btn primary" id="saveNotes">Guardar notas</button>
+ <button class="btn" id="clearNotes">Limpar</button>
+ </div>
+ <p class="small muted">Guardado localmente neste navegador.</p>`);
+ $('#saveNotes').onclick=()=>{store.set('notes',$('#notesText').value);toast('Notas guardadas.');};
+ $('#clearNotes').onclick=()=>{$('#notesText').value='';store.set('notes','');toast('Notas limpas.');};
+ break;
+ }
+ case 'tasks':{
+ const tasks=store.get('tasks',[]);
+ openModal('Lista de tarefas',`
+ <form id="taskForm" style="display:flex;gap:8px">
+ <input id="taskInput" class="field" required maxlength="160" placeholder="Adicionar uma tarefa">
+ <button class="btn primary">Adicionar</button>
+ </form>
+ <div id="taskList" style="margin-top:12px"></div>
+ <button id="clearTasks" class="btn danger" style="margin-top:12px">Apagar todas</button>`);
+ const draw=()=>{
+  $('#taskList').innerHTML=tasks.map((t,i)=>`<div class="todo-row ${t.done?'done':''}">
+  <input type="checkbox" data-check="${i}" ${t.done?'checked':''}>
+  <span>${safe(t.text)}</span>
+  <button class="btn danger" data-del="${i}">×</button>
+  </div>`).join('')||'<p class="muted">Ainda não tens tarefas.</p>';
+  store.set('tasks',tasks);
+ };
+ draw();
+ $('#taskForm').onsubmit=e=>{
+  e.preventDefault();
+  tasks.push({text:$('#taskInput').value.trim(),done:false});
+  $('#taskInput').value='';
+  draw();
+ };
+ $('#taskList').onclick=e=>{
+  const d=e.target.closest('[data-del]');
+  if(d){tasks.splice(+d.dataset.del,1);draw()}
+ };
+ $('#taskList').onchange=e=>{
+  if(e.target.dataset.check!==undefined){
+   tasks[+e.target.dataset.check].done=e.target.checked;
+   draw();
+  }
+ };
+ $('#clearTasks').onclick=()=>{
+  if(confirm('Apagar todas as tarefas?')){tasks.splice(0);draw()}
+ };
+ break;
+ }
+ case 'calendar':{
+ const now=new Date();
+ openModal('Calendário',`
+ <p class="muted">Hoje é</p>
+ <h2>${safe(new Intl.DateTimeFormat('pt-PT',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(now))}</h2>
+ ${toolInput('calDate','Escolher uma data','','date',now.toISOString().slice(0,10))}
+ <div id="calOut" class="output" style="margin-top:12px"></div>`);
+ const draw=()=>{
+  const d=new Date($('#calDate').value+'T12:00:00');
+  $('#calOut').textContent=$('#calDate').value?new Intl.DateTimeFormat('pt-PT',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(d):'Escolhe uma data.';
+ };
+ $('#calDate').onchange=draw;
+ draw();
+ break;
+ }
+ case 'calculator':
+ openModal('Calculadora',`
+ ${toolInput('calcExpr','Expressão matemática','Ex.: (12 + 8) * 3 - 5')}
+ <div class="tool-actions"><button class="btn primary" id="calcGo">Calcular</button></div>
+ <div id="calcOut" class="output" style="margin-top:12px">O resultado aparece aqui.</div>
+ <p class="small muted">Aceita números, parênteses e + − × ÷ % . Não executa código JavaScript.</p>`);
+ $('#calcGo').onclick=()=>{
+  const s=$('#calcExpr').value.trim();
+  if(!s||!/^[\d+\-*/().%\s]+$/.test(s)){toast('Expressão inválida.');return}
+  try{
+   const result=Function('"use strict";return ('+s.replace(/%/g,'/100')+')')();
+   if(!Number.isFinite(result))throw 0;
+   $('#calcOut').textContent=String(Number(result.toFixed(10)));
+  }catch{$('#calcOut').textContent='Não foi possível calcular.'}
+ };
+ break;
+ case 'percentage':
+ openModal('Calculadora de percentagens',`
+ ${toolInput('pctValue','Valor base','Ex.: 80','number')}
+ ${toolInput('pctRate','Percentagem (%)','Ex.: 15','number')}
+ <div class="tool-actions"><button class="btn primary" id="pctGo">Calcular</button></div>
+ <div id="pctOut" class="output" style="margin-top:12px"></div>`);
+ $('#pctGo').onclick=()=>{
+  let a=Number($('#pctValue').value),b=Number($('#pctRate').value);
+  $('#pctOut').textContent=$('#pctValue').value!==''&&$('#pctRate').value!==''?(a*b/100).toLocaleString('pt-PT',{maximumFractionDigits:6}):'Preenche os dois valores.';
+ };
+ break;
+ case 'converter':
+ openModal('Conversor de unidades',`
+ <label class="label">Tipo de conversão</label>
+ <select id="convType" class="field">
+ <option value="length">Comprimento (metros)</option>
+ <option value="mass">Massa (quilogramas)</option>
+ <option value="temp">Temperatura</option>
+ </select>
+ ${toolInput('convValue','Valor','Introduz um valor','number')}
+ <label class="label">De</label><select id="convFrom" class="field"></select>
+ <label class="label">Para</label><select id="convTo" class="field"></select>
+ <div class="tool-actions"><button class="btn primary" id="convGo">Converter</button></div>
+ <div id="convOut" class="output"></div>`);
+ const defs={
+ length:[['m','Metros',1],['km','Quilómetros',1000],['cm','Centímetros',.01],['mm','Milímetros',.001],['mi','Milhas',1609.344],['ft','Pés',.3048]],
+ mass:[['kg','Quilogramas',1],['g','Gramas',.001],['mg','Miligramas',.000001],['lb','Libras',.45359237],['oz','Onças',.0283495]],
+ temp:[['C','Celsius'],['F','Fahrenheit'],['K','Kelvin']]
+ };
+ const fill=()=>{
+ let type=$('#convType').value;
+ ['convFrom','convTo'].forEach(id=>{
+ $('#'+id).innerHTML=defs[type].map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('');
+ });
+ };
+ fill();
+ $('#convType').onchange=fill;
+ $('#convGo').onclick=()=>{
+ let v=Number($('#convValue').value),f=$('#convFrom').value,t=$('#convTo').value,type=$('#convType').value;
+ if($('#convValue').value==='')return;
+ let out;
+ if(type==='temp'){
+ let c=f==='C'?v:f==='F'?(v-32)*5/9:v-273.15;
+ out=t==='C'?c:t==='F'?c*9/5+32:c+273.15;
+ }else{
+ out=v*defs[type].find(x=>x[0]===f)[2]/defs[type].find(x=>x[0]===t)[2];
+ }
+ $('#convOut').textContent=Number(out.toFixed(8)).toLocaleString('pt-PT')+' '+t;
+ };
+ break;
+
+ case 'qr':
+ openModal('Criador de QR Code',`
+ ${toolArea('qrText','Texto ou endereço web','https://exemplo.pt')}
+ <div class="tool-actions">
+ <button class="btn primary" id="makeQr">Criar QR Code</button>
+ <button class="btn" id="downloadQr">Guardar imagem</button>
+ </div>
+ <div class="qr-wrap" id="qrOutput"><span class="muted">O teu QR Code aparece aqui.</span></div>
+ <p class="small muted">Para gerar a imagem, é necessária uma ligação ao serviço público QRServer. Não introduzas informação privada.</p>`);
+ $('#makeQr').onclick=()=>{
+ const val=$('#qrText').value.trim();
+ if(!val)return toast('Escreve primeiro algum texto ou link.');
+ const img=document.createElement('img');
+ img.alt='QR Code gerado';
+ img.width=250;
+ img.height=250;
+ img.src='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data='+encodeURIComponent(val);
+ img.onerror=()=>toast('Não foi possível gerar. Verifica a ligação à internet.');
+ $('#qrOutput').replaceChildren(img);
+ };
+ $('#downloadQr').onclick=async()=>{
+ const img=$('#qrOutput img');
+ if(!img)return toast('Cria primeiro o QR Code.');
+ try{
+ const r=await fetch(img.src);
+ const blob=await r.blob();
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;
+ a.download='worldapps-qrcode.png';
+ a.click();
+ URL.revokeObjectURL(url);
+ }catch{
+ window.open(img.src,'_blank','noopener');
+ toast('Abri a imagem para a poderes guardar.');
+ }
+ };
+ break;
+
+ case 'password':
+ openModal('Gerador de palavras-passe',`
+ ${toolInput('passLength','Comprimento (8–64)','16','number','16')}
+ <label class="label"><input type="checkbox" id="passSymbols" checked> Incluir símbolos</label>
+ <div class="tool-actions">
+ <button class="btn primary" id="makePass">Gerar</button>
+ <button class="btn" id="copyPass">Copiar</button>
+ </div>
+ <div id="passOut" class="output" style="margin-top:12px;word-break:break-all"></div>
+ <p class="small muted">Geração local neste navegador. Não guardamos a palavra-passe.</p>`);
+ $('#makePass').onclick=()=>{
+ let n=Math.max(8,Math.min(64,parseInt($('#passLength').value)||16));
+ let chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789'+($('#passSymbols').checked?'!@#$%&*+-_=?':'');
+ let out='';
+ const bytes=new Uint32Array(n);
+ crypto.getRandomValues(bytes);
+ for(let b of bytes)out+=chars[b%chars.length];
+ $('#passOut').textContent=out;
+ };
+ $('#copyPass').onclick=()=>copyText($('#passOut').textContent);
+ $('#makePass').click();
+ break;
+
+ case 'text':
+ openModal('Ferramentas de texto',`
+ ${toolArea('textInput','O teu texto','Escreve ou cola aqui...')}
+ <div class="stat-row">
+ <div class="stat"><strong id="charCount">0</strong><span>caracteres</span></div>
+ <div class="stat"><strong id="wordCount">0</strong><span>palavras</span></div>
+ <div class="stat"><strong id="lineCount">0</strong><span>linhas</span></div>
+ </div>
+ <div class="tool-actions">
+ <button class="btn" id="upperText">MAIÚSCULAS</button>
+ <button class="btn" id="lowerText">minúsculas</button>
+ <button class="btn" id="copyText">Copiar texto</button>
+ </div>`);
+ const update=()=>{
+ let v=$('#textInput').value;
+ $('#charCount').textContent=v.length;
+ $('#wordCount').textContent=(v.trim().match(/\S+/g)||[]).length;
+ $('#lineCount').textContent=v?v.split(/\n/).length:0;
+ };
+ $('#textInput').oninput=update;
+ $('#upperText').onclick=()=>{$('#textInput').value=$('#textInput').value.toLocaleUpperCase('pt-PT');update()};
+ $('#lowerText').onclick=()=>{$('#textInput').value=$('#textInput').value.toLocaleLowerCase('pt-PT');update()};
+ $('#copyText').onclick=()=>copyText($('#textInput').value);
+ break;
+
+ case 'color':
+ openModal('Paleta de cores',`
+ <label class="label" for="colorPick">Escolhe uma cor</label>
+ <input id="colorPick" type="color" value="#356df3" style="width:100%;height:90px;border:0;background:transparent">
+ <div id="colorPreview" style="height:80px;border-radius:13px;margin:12px 0;background:#356df3"></div>
+ <label class="label">HEX</label><div id="colorHex" class="output">#356DF3</div>
+ <label class="label">RGB</label><div id="colorRgb" class="output"></div>
+ <button id="copyColor" class="btn primary" style="margin-top:12px">Copiar HEX</button>`);
+ const update=()=>{
+ let v=$('#colorPick').value,n=parseInt(v.slice(1),16);
+ $('#colorPreview').style.background=v;
+ $('#colorHex').textContent=v.toUpperCase();
+ $('#colorRgb').textContent=`R ${n>>16}, G ${(n>>8)&255}, B ${n&255}`;
+ };
+ $('#colorPick').oninput=update;
+ $('#copyColor').onclick=()=>copyText($('#colorHex').textContent);
+ update();
+ break;
+
+ case 'gradient':
+ openModal('Gerador de gradientes',`
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+ ${toolInput('gradA','Cor inicial','','color','#356df3')}
+ ${toolInput('gradB','Cor final','','color','#9b59f5')}
+ </div>
+ <label class="label">Direção</label>
+ <select id="gradDir" class="field">
+ <option value="90deg">Horizontal</option>
+ <option value="180deg">Vertical</option>
+ <option value="135deg">Diagonal</option>
+ <option value="45deg">Diagonal inversa</option>
+ </select>
+ <div id="gradPreview" style="height:120px;border-radius:14px;margin:15px 0"></div>
+ <div id="gradCode" class="output"></div>
+ <button id="copyGrad" class="btn primary" style="margin-top:12px">Copiar CSS</button>`);
+ const update=()=>{
+ let s=`linear-gradient(${$('#gradDir').value}, ${$('#gradA').value}, ${$('#gradB').value})`;
+ $('#gradPreview').style.background=s;
+ $('#gradCode').textContent=`background: ${s};`;
+ };
+ ['gradA','gradB','gradDir'].forEach(id=>$('#'+id).oninput=update);
+ $('#copyGrad').onclick=()=>copyText($('#gradCode').textContent);
+ update();
+ break;
+
+ case 'markdown':
+ openModal('Editor Markdown',`
+ ${toolArea('mdInput','Markdown','## Olá!\\nEscreve **texto em negrito**...','# Olá!\\n\\nEscreve **texto em negrito** e listas.')}
+ <label class="label">Pré-visualização simples</label>
+ <div id="mdPreview" class="output"></div>
+ <p class="small muted">A pré-visualização mostra texto formatado de forma básica; não interpreta HTML.</p>`);
+ const md=()=>{
+ let s=$('#mdInput').value;
+ let html=safe(s)
+ .replace(/^### (.*)$/gm,'<strong>$1</strong>')
+ .replace(/^## (.*)$/gm,'<h3>$1</h3>')
+ .replace(/^# (.*)$/gm,'<h2>$1</h2>')
+ .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+ .replace(/\*(.+?)\*/g,'<em>$1</em>')
+ .replace(/`(.+?)`/g,'<code>$1</code>')
+ .replace(/\n/g,'<br>');
+ $('#mdPreview').innerHTML=html;
+ };
+ $('#mdInput').oninput=md;
+ md();
+ break;
+
+ case 'json':
+ openModal('Formatador JSON',`
+ ${toolArea('jsonInput','JSON','{"nome":"WorldApps","versao":5}')}
+ <div class="tool-actions">
+ <button class="btn primary" id="formatJson">Formatar</button>
+ <button class="btn" id="minJson">Compactar</button>
+ <button class="btn" id="copyJson">Copiar resultado</button>
+ </div>
+ <div id="jsonOut" class="output" style="margin-top:12px"></div>`);
+ const fmt=compact=>{
+ try{
+ let o=JSON.parse($('#jsonInput').value);
+ $('#jsonOut').textContent=JSON.stringify(o,null,compact?0:2);
+ $('#jsonOut').dataset.ok='1';
+ }catch(e){
+ $('#jsonOut').textContent='JSON inválido: '+e.message;
+ $('#jsonOut').dataset.ok='0';
+ }
+ };
+ $('#formatJson').onclick=()=>fmt(false);
+ $('#minJson').onclick=()=>fmt(true);
+ $('#copyJson').onclick=()=>copyText($('#jsonOut').textContent);
+ break;
+
+ case 'unitbytes':
+ openModal('Conversor de dados',`
+ ${toolInput('byteValue','Quantidade','Ex.: 1024','number')}
+ <label class="label">De</label>
+ <select id="byteFrom" class="field">
+ <option value="1">Bytes</option><option value="1024" selected>KB (base 1024)</option><option value="1048576">MB (base 1024)</option><option value="1073741824">GB (base 1024)</option>
+ </select>
+ <label class="label">Para</label>
+ <select id="byteTo" class="field">
+ <option value="1">Bytes</option><option value="1024">KB</option><option value="1048576" selected>MB</option><option value="1073741824">GB</option>
+ </select>
+ <button id="byteGo" class="btn primary" style="margin-top:12px">Converter</button>
+ <div id="byteOut" class="output" style="margin-top:12px"></div>`);
+ $('#byteGo').onclick=()=>{
+ $('#byteOut').textContent=$('#byteValue').value===''?'Introduz um valor.':
+ (Number($('#byteValue').value)*Number($('#byteFrom').value)/Number($('#byteTo').value)).toLocaleString('pt-PT',{maximumFractionDigits:8});
+ };
+ break;
+
+ case 'age':
+ openModal('Calculadora de idade',`
+ ${toolInput('birthDate','Data de nascimento','','date')}
+ <button id="ageGo" class="btn primary" style="margin-top:12px">Calcular idade</button>
+ <div id="ageOut" class="output" style="margin-top:12px"></div>`);
+ $('#ageGo').onclick=()=>{
+ let d=new Date($('#birthDate').value+'T00:00:00'),n=new Date();
+ if(!$('#birthDate').value||isNaN(d)||d>n){$('#ageOut').textContent='Escolhe uma data válida no passado.';return}
+ let a=n.getFullYear()-d.getFullYear();
+ if(n.getMonth()<d.getMonth()||(n.getMonth()===d.getMonth()&&n.getDate()<d.getDate()))a--;
+ $('#ageOut').textContent=`Tens ${a} ${a===1?'ano':'anos'}.`;
+ };
+ break;
+
+ case 'random':
+ openModal('Sorteador aleatório',`
+ ${toolInput('randMin','Mínimo','1','number','1')}
+ ${toolInput('randMax','Máximo','100','number','100')}
+ <button id="randGo" class="btn primary" style="margin-top:12px">Sortear número</button>
+ <div id="randOut" style="font-size:40px;text-align:center;font-weight:850;color:var(--accent);padding:20px"></div>`);
+ $('#randGo').onclick=()=>{
+ let a=Number($('#randMin').value),b=Number($('#randMax').value);
+ if(!Number.isInteger(a)||!Number.isInteger(b)||b<a||b-a>1e9){toast('Introduz um intervalo inteiro válido.');return}
+ const arr=new Uint32Array(1);
+ crypto.getRandomValues(arr);
+ $('#randOut').textContent=String(a+arr[0]%(b-a+1));
+ };
+ break;
+
+ case 'coin':
+ openModal('Cara ou coroa',`
+ <div id="coinOut" style="font-size:70px;text-align:center;padding:20px">🪙</div>
+ <p id="coinText" style="text-align:center">Pronto para lançar?</p>
+ <button id="coinGo" class="btn primary" style="width:100%">Lançar moeda</button>`);
+ $('#coinGo').onclick=()=>{
+ let c=Math.random()<.5?'Cara':'Coroa';
+ $('#coinOut').textContent=c==='Cara'?'🙂':'🌙';
+ $('#coinText').textContent='Saiu '+c+'!';
+ };
+ break;
+
+ case 'dice':
+ openModal('Lançar dados',`
+ ${toolInput('diceCount','Número de dados (1–6)','1','number','1')}
+ <div id="diceOut" style="font-size:32px;text-align:center;padding:20px">🎲</div>
+ <button id="diceGo" class="btn primary" style="width:100%">Lançar</button>
+ <div id="diceSum" class="output" style="margin-top:12px"></div>`);
+ $('#diceGo').onclick=()=>{
+ let n=Math.max(1,Math.min(6,parseInt($('#diceCount').value)||1));
+ let vals=Array.from({length:n},()=>1+Math.floor(Math.random()*6));
+ $('#diceOut').textContent=vals.map(v=>['','⚀','⚁','⚂','⚃','⚄','⚅'][v]).join('  ');
+ $('#diceSum').textContent=`Resultados: ${vals.join(', ')} · Total: ${vals.reduce((a,b)=>a+b,0)}`;
+ };
+ break;
+
+ case 'rps':
+ openModal('Pedra, papel e tesoura',`
+ <p>Escolhe a tua jogada.</p>
+ <div class="tool-actions">
+ ${[['pedra','✊ Pedra'],['papel','✋ Papel'],['tesoura','✌️ Tesoura']].map(([v,l])=>`<button class="btn" data-rps="${v}">${l}</button>`).join('')}
+ </div>
+ <div id="rpsOut" class="output" style="margin-top:15px;text-align:center">Boa sorte!</div>`);
+ $('#modalBody').onclick=e=>{
+ let b=e.target.closest('[data-rps]');
+ if(!b)return;
+ let you=b.dataset.rps,opts=['pedra','papel','tesoura'];
+ let cpu=opts[Math.floor(Math.random()*3)];
+ let res=you===cpu?'Empate!':({pedra:'tesoura',papel:'pedra',tesoura:'papel'}[you]===cpu?'Ganhaste!':'O computador ganhou.');
+ $('#rpsOut').textContent=`Tu: ${you} · Computador: ${cpu}\n${res}`;
+ };
+ break;
+
+ case 'tictactoe':{
+ let board=Array(9).fill(''),turn='X',over=false;
+ openModal('Jogo do galo',`
+ <p id="tttStatus" style="text-align:center">Vez de X</p>
+ <div class="game-board">${board.map((_,i)=>`<button class="game-cell" data-cell="${i}" aria-label="Casa ${i+1}"></button>`).join('')}</div>
+ <div class="tool-actions" style="justify-content:center"><button id="tttReset" class="btn primary">Novo jogo</button></div>`);
+ const draw=()=>{
+ $$('.game-cell').forEach((b,i)=>{b.textContent=board[i];b.disabled=!!board[i]||over});
+ $('#tttStatus').textContent=over?'Fim de jogo':`Vez de ${turn}`;
+ };
+ const win=()=>[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(line=>board[line[0]]&&line.every(i=>board[i]===board[line[0]]));
+ $('#modalBody').onclick=e=>{
+ if(e.target.id==='tttReset'){board.fill('');turn='X';over=false;draw();return}
+ let b=e.target.closest('[data-cell]');
+ if(!b||over||board[+b.dataset.cell])return;
+ board[+b.dataset.cell]=turn;
+ let w=win();
+ if(w){over=true;$('#tttStatus').textContent=`${turn} venceu!`;toast(`${turn} venceu!`)}
+ else if(board.every(Boolean)){over=true;$('#tttStatus').textContent='Empate!'}
+ else turn=turn==='X'?'O':'X';
+ draw();
+ };
+ break;
+ }
+
+ case 'memory':{
+ let vals=['🍎','🚀','🌈','🐱','⚽','🎵','🌻','⭐','🍎','🚀','🌈','🐱','⚽','🎵','🌻','⭐'].sort(()=>Math.random()-.5);
+ let revealed=[],matched=[],moves=0;
+ openModal('Jogo da memória',`
+ <p id="memStatus" style="text-align:center">Encontra os 8 pares.</p>
+ <div class="memory-grid">${vals.map((v,i)=>`<button class="memory-cell" data-mem="${i}">?</button>`).join('')}</div>
+ <p id="memMoves" class="muted" style="text-align:center">Jogadas: 0</p>
+ <div style="text-align:center"><button id="memReset" class="btn primary">Recomeçar</button></div>`);
+ const draw=()=>{
+ $$('.memory-cell').forEach((b,i)=>{
+ b.textContent=matched.includes(i)||revealed.includes(i)?vals[i]:'?';
+ b.classList.toggle('revealed',matched.includes(i)||revealed.includes(i));
+ b.disabled=matched.includes(i)||revealed.length>=2;
+ });
+ $('#memMoves').textContent='Jogadas: '+moves;
+ if(matched.length===16)$('#memStatus').textContent='Parabéns! Encontraste todos os pares.';
+ };
+ let lock=false;
+ $('#modalBody').onclick=e=>{
+ if(e.target.id==='memReset'){launch('memory');return}
+ let b=e.target.closest('[data-mem]');
+ if(!b||lock)return;
+ let i=+b.dataset.mem;
+ if(revealed.includes(i)||matched.includes(i))return;
+ revealed.push(i);
+ if(revealed.length===2){
+ moves++;
+ if(vals[revealed[0]]===vals[revealed[1]]){
+ matched.push(...revealed);
+ revealed=[];
+ }else{
+ lock=true;
+ draw();
+ setTimeout(()=>{revealed=[];lock=false;draw()},700);
+ }
+ }
+ draw();
+ };
+ draw();
+ break;
+ }
+
+ case 'reaction':
+ openModal('Teste de reação',`
+ <div id="reactBox" style="padding:45px 15px;border-radius:16px;text-align:center;background:var(--panel2);font-size:20px;font-weight:800">Carrega em começar.</div>
+ <button id="reactStart" class="btn primary" style="width:100%;margin-top:12px">Começar</button>
+ <p id="reactResult" style="text-align:center"></p>
+ <p class="small muted">Espera que o painel fique verde e carrega o mais depressa possível. Não carregues antes.</p>`);
+ let start=0,waitTimer=null,ready=false;
+ $('#reactStart').onclick=()=>{
+ clearTimeout(waitTimer);
+ ready=false;
+ $('#reactBox').style.background='var(--panel2)';
+ $('#reactBox').textContent='Espera pelo verde…';
+ $('#reactResult').textContent='';
+ $('#reactStart').disabled=true;
+ waitTimer=setTimeout(()=>{
+ ready=true;
+ start=performance.now();
+ $('#reactBox').style.background='#16a36a';
+ $('#reactBox').style.color='white';
+ $('#reactBox').textContent='AGORA!';
+ },1000+Math.random()*3000);
+ };
+ $('#reactBox').onclick=()=>{
+ if(!$('#reactStart').disabled)return;
+ if(!ready){
+ clearTimeout(waitTimer);
+ $('#reactResult').textContent='Cedo demais! Tenta outra vez.';
+ $('#reactStart').disabled=false;
+ $('#reactBox').textContent='Falso arranque';
+ return;
+ }
+ $('#reactResult').textContent=`O teu tempo: ${Math.round(performance.now()-start)} ms`;
+ ready=false;
+ $('#reactStart').disabled=false;
+ $('#reactBox').style.color='var(--text)';
+ $('#reactBox').style.background='var(--panel2)';
+ $('#reactBox').textContent='Muito bem!';
+ };
+ break;
+
+ case 'typing':{
+ const phrases=['A WorldApps reúne ferramentas úteis num só lugar.','Praticar um pouco todos os dias ajuda a melhorar.','A criatividade começa com uma pequena ideia.'];
+ let phrase=phrases[Math.floor(Math.random()*phrases.length)];
+ openModal('Teste de escrita',`
+ <div class="output" id="typingPhrase">${phrase}</div>
+ ${toolArea('typingInput','Escreve o texto acima','Começa a escrever...')}
+ <div class="stat-row">
+ <div class="stat"><strong id="typeTime">0s</strong><span>tempo</span></div>
+ <div class="stat"><strong id="typeWords">0</strong><span>palavras</span></div>
+ <div class="stat"><strong id="typeAcc">100%</strong><span>correspondência</span></div>
+ </div>
+ <button id="typeReset" class="btn">Nova frase</button>`);
+ let t0=null,interval=null;
+ const reset=()=>{
+ clearInterval(interval);
+ phrase=phrases[Math.floor(Math.random()*phrases.length)];
+ $('#typingPhrase').textContent=phrase;
+ $('#typingInput').value='';
+ $('#typeTime').textContent='0s';
+ $('#typeWords').textContent='0';
+ $('#typeAcc').textContent='100%';
+ t0=null;
+ };
+ $('#typingInput').oninput=()=>{
+ if(t0===null){t0=Date.now();interval=setInterval(()=>$('#typeTime').textContent=Math.floor((Date.now()-t0)/1000)+'s',250)}
+ let v=$('#typingInput').value;
+ $('#typeWords').textContent=(v.trim().match(/\S+/g)||[]).length;
+ let correct=0;
+ for(let i=0;i<Math.min(v.length,phrase.length);i++)if(v[i]===phrase[i])correct++;
+ $('#typeAcc').textContent=(v.length?Math.round(correct/v.length*100):100)+'%';
+ if(v===phrase){clearInterval(interval);toast('Texto concluído!')}
+ };
+ $('#typeReset').onclick=reset;
+ break;
+ }
+
+ case 'checklist':{
+ let items=store.get('travelChecklist',['Documento de identificação','Carregador','Roupa','Escova de dentes','Medicamentos pessoais']);
+ openModal('Checklist de viagem',`
+ <form id="travelForm" style="display:flex;gap:8px">
+ <input id="travelInput" class="field" placeholder="Adicionar item" required>
+ <button class="btn primary">Adicionar</button>
+ </form>
+ <div id="travelList"></div>
+ <div class="tool-actions"><button id="travelReset" class="btn">Repor lista</button></div>`);
+ const draw=()=>{
+ $('#travelList').innerHTML=items.map((x,i)=>`<div class="todo-row"><input type="checkbox" data-travelcheck="${i}"><span>${safe(x)}</span><button class="btn danger" data-traveldel="${i}">×</button></div>`).join('');
+ store.set('travelChecklist',items);
+ };
+ draw();
+ $('#travelForm').onsubmit=e=>{
+ e.preventDefault();
+ items.push($('#travelInput').value.trim());
+ $('#travelInput').value='';
+ draw();
+ };
+ $('#travelList').onclick=e=>{
+ let b=e.target.closest('[data-traveldel]');
+ if(b){items.splice(+b.dataset.traveldel,1);draw()}
+ };
+ $('#travelReset').onclick=()=>{
+ items=['Documento de identificação','Carregador','Roupa','Escova de dentes','Medicamentos pessoais'];
+ draw();
+ };
+ break;
+ }
+
+ case 'expenses':{
+ let ex=store.get('expenses',[]);
+ openModal('Registo de despesas',`
+ <form id="expenseForm">
+ ${toolInput('expenseName','Descrição','Ex.: almoço')}
+ <label class="label" for="expenseAmount">Valor (€)</label>
+ <input id="expenseAmount" class="field" type="number" min="0" step=".01" required placeholder="0,00">
+ <button class="btn primary" style="margin-top:12px">Registar despesa</button>
+ </form>
+ <div id="expenseList"></div>
+ <div class="stat" style="margin-top:15px"><span>Total registado</span><strong id="expenseTotal">0,00 €</strong></div>
+ <p class="small muted">Registo simples local; não é uma conta bancária nem aconselhamento financeiro.</p>`);
+ const draw=()=>{
+ $('#expenseList').innerHTML=ex.map((x,i)=>`<div class="todo-row"><span>${safe(x.name)} <small class="muted">· ${x.amount.toLocaleString('pt-PT',{style:'currency',currency:'EUR'})}</small></span><button class="btn danger" data-exdel="${i}">×</button></div>`).join('')||'<p class="muted">Sem despesas registadas.</p>';
+ $('#expenseTotal').textContent=ex.reduce((a,x)=>a+x.amount,0).toLocaleString('pt-PT',{style:'currency',currency:'EUR'});
+ store.set('expenses',ex);
+ };
+ draw();
+ $('#expenseForm').onsubmit=e=>{
+ e.preventDefault();
+ let amount=Number($('#expenseAmount').value);
+ if(amount<0)return;
+ ex.push({name:$('#expenseName').value.trim()||'Despesa',amount});
+ draw();
+ $('#expenseForm').reset();
+ };
+ $('#expenseList').onclick=e=>{
+ let b=e.target.closest('[data-exdel]');
+ if(b){ex.splice(+b.dataset.exdel,1);draw()}
+ };
+ break;
+ }
+
+ case 'water':{
+ let count=store.get('water',{date:new Date().toDateString(),count:0});
+ if(count.date!==new Date().toDateString())count={date:new Date().toDateString(),count:0};
+ openModal('Lembrete de água',`
+ <div style="text-align:center;padding:20px">
+ <div style="font-size:64px">💧</div>
+ <h2 id="waterCount">${count.count} copos</h2>
+ <p class="muted">Marca os copos que bebeste hoje.</p>
+ <button class="btn primary" id="waterAdd">+ Adicionar um copo</button>
+ <button class="btn" id="waterRemove">−</button>
+ <div style="font-size:28px;margin-top:20px" id="waterIcons"></div>
+ </div>
+ <p class="small muted">A quantidade adequada de água varia de pessoa para pessoa.</p>`);
+ const draw=()=>{
+ $('#waterCount').textContent=count.count+' copos';
+ $('#waterIcons').textContent='💧'.repeat(Math.min(count.count,12));
+ store.set('water',count);
+ };
+ $('#waterAdd').onclick=()=>{count.count++;draw()};
+ $('#waterRemove').onclick=()=>{count.count=Math.max(0,count.count-1);draw()};
+ draw();
+ break;
+ }
+
+ case 'quotes':{
+ const q=['Pequenos passos também te levam longe.','A prática transforma esforço em progresso.','Cada ideia pode ser o início de algo novo.','Feito é melhor do que perfeito quando continuas a melhorar.','A curiosidade abre portas.'];
+ openModal('Frase do dia',`
+ <div style="padding:25px 5px;text-align:center">
+ <div style="font-size:40px">“</div>
+ <h2 id="quoteOut" style="line-height:1.5">${q[Math.floor(Math.random()*q.length)]}</h2>
+ <button id="quoteNext" class="btn primary" style="margin-top:20px">Outra frase</button>
+ </div>`);
+ $('#quoteNext').onclick=()=>$('#quoteOut').textContent=q[Math.floor(Math.random()*q.length)];
+ break;
+ }
+
+ case 'pomodoro':
+ case 'timer':{
+ let total=id==='pomodoro'?25*60:300,remaining=total,interval=null,running=false;
+ openModal(id==='pomodoro'?'Foco Pomodoro':'Temporizador',`
+ ${id==='timer'?toolInput('timerMins','Minutos','5','number','5'):'<p class="muted">Sessão de foco de 25 minutos.</p>'}
+ <div id="timerDisplay" style="font-size:58px;font-weight:850;letter-spacing:-.04em;text-align:center;padding:20px">25:00</div>
+ <div class="tool-actions" style="justify-content:center">
+ <button class="btn primary" id="timerStart">Começar</button>
+ <button class="btn" id="timerReset">Repor</button>
+ </div>
+ <p id="timerMsg" class="muted" style="text-align:center"></p>`);
+ const display=()=>$('#timerDisplay').textContent=String(Math.floor(remaining/60)).padStart(2,'0')+':'+String(remaining%60).padStart(2,'0');
+ if(id==='timer'){
+ $('#timerDisplay').textContent='05:00';
+ $('#timerMins').onchange=()=>{
+ if(!running){total=Math.max(1,Math.min(5999,Number($('#timerMins').value)||5))*60;remaining=total;display()}
+ };
+ }
+ display();
+ $('#timerStart').onclick=()=>{
+ if(running){clearInterval(interval);running=false;$('#timerStart').textContent='Continuar';return}
+ running=true;
+ $('#timerStart').textContent='Pausar';
+ interval=setInterval(()=>{
+ remaining--;
+ display();
+ if(remaining<=0){
+ clearInterval(interval);
+ running=false;
+ $('#timerStart').textContent='Começar';
+ $('#timerMsg').textContent='Tempo terminado!';
+ toast('Tempo terminado!');
+ }
+ },1000);
+ };
+ $('#timerReset').onclick=()=>{
+ clearInterval(interval);
+ running=false;
+ total=id==='pomodoro'?1500:Math.max(1,Math.min(5999,Number($('#timerMins').value)||5))*60;
+ remaining=total;
+ display();
+ $('#timerStart').textContent='Começar';
+ $('#timerMsg').textContent='';
+ };
+ break;
+ }
+
+ case 'stopwatch':{
+ let elapsed=0,start=0,interval=null,running=false,laps=[];
+ openModal('Cronómetro',`
+ <div id="stopDisplay" style="font-size:48px;font-weight:850;text-align:center;padding:20px">00:00.00</div>
+ <div class="tool-actions" style="justify-content:center">
+ <button id="stopStart" class="btn primary">Começar</button>
+ <button id="stopLap" class="btn">Volta</button>
+ <button id="stopReset" class="btn">Repor</button>
+ </div>
+ <div id="stopLaps"></div>`);
+ const fmt=ms=>{
+ let cs=Math.floor(ms/10),s=Math.floor(cs/100),m=Math.floor(s/60);
+ return `${String(m).padStart(2,'0')}:${String(s%60).padStart(2,'0')}.${String(cs%100).padStart(2,'0')}`;
+ };
+ const draw=()=>{
+ $('#stopDisplay').textContent=fmt(elapsed);
+ $('#stopLaps').innerHTML=laps.map((l,i)=>`<div class="todo-row"><span>Volta ${i+1}</span><strong>${fmt(l)}</strong></div>`).join('');
+ };
+ interval=setInterval(()=>{if(running){elapsed=Date.now()-start;draw()}},50);
+ $('#stopStart').onclick=()=>{
+ if(running){running=false;elapsed=Date.now()-start;$('#stopStart').textContent='Continuar'}
+ else{start=Date.now()-elapsed;running=true;$('#stopStart').textContent='Pausar'}
+ };
+ $('#stopLap').onclick=()=>{if(running){laps.push(elapsed);draw()}};
+ $('#stopReset').onclick=()=>{
+ running=false;elapsed=0;laps=[];
+ $('#stopStart').textContent='Começar';
+ draw();
+ };
+ break;
+ }
+
+ case 'favorites':
+ openModal('Os meus favoritos',`
+ <p>As tuas aplicações favoritas aparecem aqui.</p>
+ <div id="favList"></div>`);
+ const fav=favorites();
+ $('#favList').innerHTML=apps.filter(a=>fav.includes(a.id)).map(a=>`<div class="todo-row"><span>${a.icon} ${safe(a.name)}</span><button class="btn" data-favopen="${a.id}">Abrir</button></div>`).join('')||'<p class="muted">Ainda não adicionaste favoritos. Usa o botão ☆ em cada aplicação.</p>';
+ $('#favList').onclick=e=>{
+ let b=e.target.closest('[data-favopen]');
+ if(b)launch(b.dataset.favopen);
+ };
+ break;
+
+ case 'profile':
+ profileModal();
+ break;
+
+ default:
+ toast('Esta aplicação não está disponível.');
+ }
+}
+
+async function copyText(text){
+ try{
+ await navigator.clipboard.writeText(text);
+ toast('Copiado para a área de transferência.');
+ }catch{
+ const ta=document.createElement('textarea');
+ ta.value=text;
+ document.body.append(ta);
+ ta.select();
+ try{document.execCommand('copy');toast('Copiado.')}
+ catch{toast('Não foi possível copiar automaticamente.')}
+ ta.remove();
+ }
+}
+
+function launchCard(id){launch(id)}
+
+$('#appGrid').addEventListener('click',e=>{
+ const c=e.target.closest('[data-app]');
+ if(!c)return;
+ const app=apps.find(a=>a.id===c.dataset.app);
+ if(!app)return;
+ openModal(app.name,`
+ <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
+ <div class="app-icon" style="margin:0">${app.icon}</div>
+ <div><strong>${safe(app.name)}</strong><div class="muted small">${safe(app.desc)}</div></div>
+ </div>
+ <div class="tool-actions">
+ <button class="btn primary" id="launchNow">Abrir aplicação</button>
+ <button class="btn" id="favToggle">${favorites().includes(app.id)?'★ Remover favorito':'☆ Adicionar favorito'}</button>
+ </div>`);
+ $('#launchNow').onclick=()=>launchCard(app.id);
+ $('#favToggle').onclick=()=>{
+ let f=favorites();
+ if(f.includes(app.id))f=f.filter(x=>x!==app.id);
+ else f.push(app.id);
+ store.set('favorites',f);
+ $('#favToggle').textContent=f.includes(app.id)?'★ Remover favorito':'☆ Adicionar favorito';
+ toast(f.includes(app.id)?'Adicionado aos favoritos.':'Removido dos favoritos.');
+ renderApps();
+ };
+});
+
+$$('.navbtn[data-filter]').forEach(b=>b.addEventListener('click',()=>{
+ currentFilter=b.dataset.filter;
+ searchTerm=$('#search').value.trim().toLowerCase();
+ renderApps();
+ window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+$('#search').addEventListener('input',e=>{
+ searchTerm=e.target.value.trim().toLowerCase();
+ renderApps();
+});
+
+$('#clearSearch').onclick=()=>{
+ $('#search').value='';
+ searchTerm='';
+ currentFilter='all';
+ renderApps();
+};
+
+$('#themeBtn').onclick=toggleTheme;
+$('#welcomeTheme').onclick=toggleTheme;
+
+$('#homeBtn').onclick=()=>{
+ currentFilter='all';
+ $('#search').value='';
+ searchTerm='';
+ renderApps();
+ window.scrollTo({top:0,behavior:'smooth'});
+};
+
+$('#welcomeLogin').onclick=()=>openAccount('login');
+$('#enterApps').onclick=showApp;
+$('#profileBtn').onclick=profileModal;
+$('#modalClose').onclick=closeModal;
+
+$('#modalBackdrop').addEventListener('click',e=>{
+ if(e.target===$('#modalBackdrop'))closeModal();
+});
+
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape')closeModal();
+});
+
+applyTheme();
+updateUserUI();
+
+if(currentUser&&!getAccounts().some(a=>a.email===currentUser.email)){
+ setSession(null);
+}
+
+showWelcome();
+})();
+</script>
+</body>
+</html>
